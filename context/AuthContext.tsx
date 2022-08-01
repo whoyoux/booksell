@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, signInWithRedirect, signOut } from 'firebase/auth';
 
 import { auth, googleProvider } from '../lib/firebase';
+import { useRouter } from 'next/router';
 
 type UserProp = {
     uid: string;
@@ -27,9 +28,11 @@ export const AuthContextProvider = ({
 }) => {
     const [user, setUser] = useState<UserProp | null>(null);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
+            console.log(user);
             if (user) {
                 setUser({
                     uid: user.uid ?? '',
@@ -53,6 +56,7 @@ export const AuthContextProvider = ({
 
     const logout = async () => {
         setUser(null);
+        router.push('/');
         await signOut(auth);
     };
 
