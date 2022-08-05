@@ -1,12 +1,18 @@
 import { NextPage, NextPageContext } from 'next/types';
 import React from 'react';
 
+import { useSession } from 'next-auth/react';
+
 import { auth as adminAuth } from '../../lib/firebaseAdmin';
 import { UserRecord } from 'firebase-admin/lib/auth/user-record';
+
 import { useAuth } from '../../context/AuthContext';
 
 const Profile: NextPage<{ user: UserRecord }> = ({ user: userFound }) => {
-    const { user, logout } = useAuth();
+    // const { user, logout } = useAuth();
+
+    const { data: session } = useSession();
+
     return (
         <main className="w-4/5 max-w-md mx-auto">
             <div className="flex flex-col sm:flex-row gap-10 sm:gap-0 items-center w-full justify-between">
@@ -21,16 +27,6 @@ const Profile: NextPage<{ user: UserRecord }> = ({ user: userFound }) => {
                         {userFound?.displayName}
                     </h1>
                 </div>
-                {user?.uid === userFound.uid && (
-                    <div>
-                        <button
-                            onClick={logout}
-                            className="px-4 py-2.5 bg-gray-200 rounded hover:bg-gray-400 transition-all"
-                        >
-                            Logout
-                        </button>
-                    </div>
-                )}
             </div>
         </main>
     );

@@ -1,16 +1,18 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { AuthContextProvider } from '../context/AuthContext';
+// import { AuthContextProvider } from '../context/AuthContext';
+
+import { SessionProvider } from 'next-auth/react';
 
 import Layout from '../layout/Layout';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     return (
-        <AuthContextProvider>
+        <SessionProvider session={session}>
             <Layout>
                 <Component {...pageProps} />
             </Layout>
-        </AuthContextProvider>
+        </SessionProvider>
     );
 }
 
