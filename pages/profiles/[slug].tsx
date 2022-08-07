@@ -6,9 +6,7 @@ import { useSession } from 'next-auth/react';
 import { auth as adminAuth } from '../../lib/firebaseAdmin';
 import { UserRecord } from 'firebase-admin/lib/auth/user-record';
 
-import { useAuth } from '../../context/AuthContext';
-
-const Profile: NextPage<{ user: UserRecord }> = ({ user: userFound }) => {
+const Profile: NextPage = () => {
     // const { user, logout } = useAuth();
 
     const { data: session } = useSession();
@@ -19,12 +17,12 @@ const Profile: NextPage<{ user: UserRecord }> = ({ user: userFound }) => {
                 <div className="flex flex-col sm:flex-row items-center gap-5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                        src={userFound?.photoURL}
+                        // src={userFound?.photoURL}
                         alt="User profile picture"
                         className="w-16 h-16 rounded-full"
                     />
                     <h1 className="text-2xl font-medium">
-                        {userFound?.displayName}
+                        {/* {userFound?.displayName} */}
                     </h1>
                 </div>
             </div>
@@ -32,41 +30,41 @@ const Profile: NextPage<{ user: UserRecord }> = ({ user: userFound }) => {
     );
 };
 
-export async function getServerSideProps(context: NextPageContext) {
-    const { slug } = context.query;
+// export async function getServerSideProps(context: NextPageContext) {
+//     const { slug } = context.query;
 
-    if (!slug || Array.isArray(slug))
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        };
+//     if (!slug || Array.isArray(slug))
+//         return {
+//             redirect: {
+//                 destination: '/',
+//                 permanent: false
+//             }
+//         };
 
-    try {
-        const { uid, email, emailVerified, displayName, photoURL } =
-            await adminAuth.getUser(slug);
+//     try {
+//         const { uid, email, emailVerified, displayName, photoURL } =
+//             await adminAuth.getUser(slug);
 
-        const preparedUser = {
-            uid,
-            email,
-            emailVerified,
-            displayName,
-            photoURL
-        };
+//         const preparedUser = {
+//             uid,
+//             email,
+//             emailVerified,
+//             displayName,
+//             photoURL
+//         };
 
-        return {
-            props: { user: preparedUser }
-        };
-    } catch (error) {
-        console.log(error);
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            }
-        };
-    }
-}
+//         return {
+//             props: { user: preparedUser }
+//         };
+//     } catch (error) {
+//         console.log(error);
+//         return {
+//             redirect: {
+//                 destination: '/',
+//                 permanent: false
+//             }
+//         };
+//     }
+// }
 
 export default Profile;

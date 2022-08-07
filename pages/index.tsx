@@ -212,18 +212,18 @@ const Home: NextPage = () => {
     };
 
     return (
-        <div className="text-center w-4/5 mx-auto">
+        <div className="text-center w-4/5 mx-auto pb-20">
             <div className="mt-10">
                 <form onSubmit={findBooks} className="mb-20">
                     <label
-                        className="block text-xl font-medium mb-8"
+                        className="block text-3xl font-medium mb-8"
                         htmlFor="username"
                     >
                         Znajdź książkę dla siebie
                     </label>
                     <div className="flex flex-col md:flex-row items-center justify-center">
                         <input
-                            className="appearance-none border rounded md:rounded-l md:rounded-r-none w-full max-w-xl py-3 px-3 text-gray-700 focus:outline-none focus:shadow-outline mb-5 md:mb-0"
+                            className="appearance-none  border rounded md:rounded-l md:rounded-r-none w-full max-w-xl py-3 px-3 text-gray-700 focus:outline-none focus:shadow-outline mb-5 md:mb-0"
                             id="username"
                             type="text"
                             placeholder="Matematyka z plusem..."
@@ -238,7 +238,7 @@ const Home: NextPage = () => {
                     </div>
                 </form>
 
-                <main>
+                <div>
                     <h1 className="text-xl font-medium">
                         Niedawno dodane książki
                     </h1>
@@ -247,7 +247,7 @@ const Home: NextPage = () => {
                             return <Book {...book} key={book.id} />;
                         })}
                     </div>
-                </main>
+                </div>
             </div>
         </div>
     );
@@ -262,7 +262,7 @@ const Book = (book: BookType) => {
             <img
                 src={book.images[0].url}
                 alt={book.name}
-                className="w-full h-48 rounded"
+                className="w-full h-48 rounded hover:brightness-50 transition-all cursor-pointer"
             />
             <div className="flex flex-row justify-between items-center">
                 <div>
